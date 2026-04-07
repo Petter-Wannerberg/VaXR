@@ -1,4 +1,4 @@
-FROM git.ri.se:4567/teknologier-for-interaktion/vaxr-lab:builder-dev-5.3.1 as builder
+FROM ghcr.io/epicgames/unreal-engine:builder-dev-5.3.1 as builder
 
 # Copy the source code for the project into the container
 COPY --chown=ue4:ue4 . /tmp/project
