@@ -1,0 +1,54 @@
+# Converted from .gitlab-ci.yml
+# Builds a Docker image and pushes to GitHub Container Registry (ghcr.io)
+
+name: Docker Build
+
+on:
+  push:
+    branches:
+      - production
+  pull_request:
+    branches:
+      - production
+
+env:
+  DOCKER_IMAGE_NAME: ghcr.io/${{ github.repository }}:${{ github.ref_name }}
+
+jobs:
+  docker-build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout with submodules
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Check Dockerfile exists
+        run: test -f Dockerfile
+
+      - name: Free disk space
+        run: |
+          df -h
+          docker system prune -fa
+          df -h
+
+      - name: Log in to GitHub Container Registry
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      - name: Log in to UE Registry
+        run: docker login -u "${{ secrets.UE_REGISTRY_USER }}" -p "${{ secrets.UE_REGISTRY_PASSWORD }}" ${{ secrets.UE_REGISTRY }}
+
+      - name: Build Docker image
+        run: docker build --pull -t "$DOCKER_IMAGE_NAME" .
+
+      - name: Push Docker image
+        run: |
+          docker push "$DOCKER_IMAGE_NAME"
+          if [[ "${{ github.ref_name }}" == "production" && "${{ github.event_name }}" == "push" ]]; then
+            docker tag "$DOCKER_IMAGE_NAME" "ghcr.io/${{ github.repository }}:latest"
+            docker push "ghcr.io/${{ github.repository }}:latest"
+          fi
