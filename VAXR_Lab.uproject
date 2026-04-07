@@ -27,7 +27,8 @@
 				"Win64",
 				"Linux",
 				"Android",
-				"HoloLens"
+				"Mac",
+				"IOS"
 			]
 		},
 		{
@@ -41,7 +42,8 @@
 				"Win64",
 				"Linux",
 				"Android",
-				"HoloLens"
+				"Mac",
+				"IOS"
 			]
 		},
 		{
