@@ -23,10 +23,11 @@ jobs:
       packages: write
 
     steps:
-      - name: Checkout with submodules
+      - name: Checkout with submodules and LFS
         uses: actions/checkout@v4
         with:
           submodules: recursive
+          lfs: true
 
       - name: Set image tag (lowercased)
         run: |
