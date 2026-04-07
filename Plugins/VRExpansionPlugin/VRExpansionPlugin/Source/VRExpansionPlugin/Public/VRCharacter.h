@@ -25,6 +25,10 @@ public:
 
 	virtual FVector GetTargetHeightOffset() override;
 
+	virtual void OnStartCrouch(float HalfHeightAdjust, float ScaledHalfHeightAdjust) override;
+	virtual void OnEndCrouch(float HalfHeightAdjust, float ScaledHalfHeightAdjust) override;
+
+
 	// Regenerates the base offsetcomponenttoworld that VR uses
 	virtual void RegenerateOffsetComponentToWorld(bool bUpdateBounds, bool bCalculatePureYaw) override;
 	virtual void SetCharacterSizeVR(float NewRadius, float NewHalfHeight, bool bUpdateOverlaps = true) override;
@@ -38,6 +42,8 @@ public:
 
 	// Returns the head location projected from the world offset (if applicable)
 	virtual FVector GetProjectedVRLocation() const override;
+
+	virtual void ZeroToSeatInformation() override;
 	
 	
 	// Overriding to correct some nav stuff
