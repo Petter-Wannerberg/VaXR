@@ -4,6 +4,7 @@
 name: Docker Build with Gitlab Hosting
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - production
