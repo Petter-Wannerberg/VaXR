@@ -26,6 +26,9 @@ jobs:
           submodules: recursive
           lfs: true
 
+      - name: Verify LFS files are pulled
+        run: git lfs pull
+
       - name: Check Dockerfile exists
         run: test -f Dockerfile
 
@@ -49,5 +52,6 @@ jobs:
       - name: Build and push prod frontend image
         uses: docker/build-push-action@v2
         with:
+          context: .
           push: true
           tags: git.ri.se:4567/teknologier-for-interaktion/vaxr-lab:production

@@ -29,6 +29,9 @@ jobs:
           submodules: recursive
           lfs: true
 
+      - name: Verify LFS files are pulled
+        run: git lfs pull
+
       - name: Set image tag (lowercased)
         run: |
           OWNER=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
