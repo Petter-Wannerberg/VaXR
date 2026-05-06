@@ -1,5 +1,10 @@
 .claude/
 
+**/Binaries
+
+**/Intermediate
+
+
 .hg/
 binaries/
 deriveddatacache/
